@@ -112,7 +112,7 @@ fn filter_packet(packet: &mDNSPacket, domains: &Vec<String>) -> bool {
             let record_name = record.qname.to_string();
             let matched = domains.contains(&record_name);
             if matched {
-                info!("found quary packet, domain: {}", record_name);
+                info!("found query packet, domain: {}", record_name);
             }
             matched
         })
@@ -128,7 +128,7 @@ fn filter_packet(packet: &mDNSPacket, domains: &Vec<String>) -> bool {
 
             if matched {
                 info!(
-                    "found answser packet, domain: {} at: {:?}",
+                    "found answer packet, domain: {} at: {:?}",
                     record_name, &record.data
                 );
             }

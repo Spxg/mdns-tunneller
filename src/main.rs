@@ -7,7 +7,6 @@ use async_channel::Receiver;
 use clap::Parser;
 use pnet::datalink::{self, NetworkInterface};
 use std::sync::Arc;
-use std::thread;
 use tokio::{net::TcpListener, sync::Mutex};
 use tokio::{
     net::TcpStream,
@@ -66,7 +65,7 @@ async fn main() -> Result<()> {
         let tcp = TcpStream::connect(&addr).await?;
         info!("connected");
 
-        thread::spawn(move || mdns_listener.listen());
+        tokio::task::spawn_blocking(move || mdns_listener.listen());
         let tunnel = TunnelPeer {
             mdns_sender,
             channel_rx,
@@ -78,7 +77,7 @@ async fn main() -> Result<()> {
         let listener = TcpListener::bind(&addr).await?;
         info!("start listening");
 
-        thread::spawn(move || mdns_listener.listen());
+        tokio::task::spawn_blocking(move || mdns_listener.listen());
 
         while let Ok((con, addr)) = listener.accept().await {
             info!(?addr, "connected");

@@ -32,4 +32,4 @@ cargo run server -a ip:port -i interface
 cargo run client -a ip:port -i interface
 ```
 
-_**In fact, there are no Server and Clients, query and answer packcet forward to each peer.**_
+_**In fact, there are no Server and Clients, query and answer packet forward to each peer.**_
